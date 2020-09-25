@@ -1,0 +1,14 @@
+{
+  "firestore": {
+    "rules": "y",
+    "indexes": "y"
+  },
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
