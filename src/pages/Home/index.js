@@ -29,7 +29,7 @@ const Home = () => {
     }
 
     const deleteFund = async fund => {
-        console.log('deletando o fundo ' + fund.id)
+        database.deleteFund(fund.id)
     }
 
     return (
