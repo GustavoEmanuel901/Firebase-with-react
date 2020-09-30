@@ -1,45 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Card from '../../components/Card'
 import Empty from '../../components/Empty'
 import FundModal from '../../components/FundModal'
+
+import database from '../../services/database'
 
 import './styles.css'
 
 const Home = () => {
     const [ visible, setVisible ] = useState(false)
     const [ select, setSelect ] = useState({})
+    const [ funds, setFunds ] = useState([])
+
+    useEffect(() => {
+        database.listFunds().then(res => {
+            setFunds(res)
+        })
+    }, [funds])
 
     function onClose(){
         setVisible(false)
     }
-
-    const funds = [
-        {
-           id: 1,
-           name: 'Fundo Teste',
-           currentValue: 1000,
-           requiredValue: 2500,
-           percentage: 10,
-           rescueDate: new Date().toISOString()
-        },
-        {
-            id: 2,
-            name: 'Novo Fundo',
-            currentValue: 250,
-            requiredValue: 2500,
-            percentage: 10,
-            rescueDate: new Date().toISOString()
-         },
-         {
-            id: 3,
-            name: 'Fundo 3',
-            currentValue: 250,
-            requiredValue: 2500,
-            percentage: 10,
-            rescueDate: new Date().toISOString()
-         }
-    ]
     
     const updateFund = fund => {
         setSelect(fund)

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Modal, Button, Form, Input, InputNumber, DatePicker } from 'antd'
 import moment from 'moment'
+import database from '../../services/database'
 
 import './styles.css'
 
@@ -27,12 +28,27 @@ function FundModal({ visible, onClose, fund }) {
     onClose()
   }
 
-  function handleOk(){
+  async function handleOk(){
+    if(fund.id) {
+      await database.updateFund(fund.id,  {
+        name,
+        currentValue,
+        requiredValue,
+        rescueDate: rescueDate ? rescueDate.toISOString() : null
+      })
+    } else {
+      await database.addFund({
+        name,
+        currentValue,
+        requiredValue,
+        rescueDate: rescueDate ? rescueDate.toISOString() : null
+      })
+    }
+
     onClose()
   }
 
   return (
-    <>
       <Modal
         title='Criar fundo de Capital'
         visible={visible}
@@ -96,9 +112,6 @@ function FundModal({ visible, onClose, fund }) {
       </Form>
 
       </Modal>
-
-      
-  </>
   );
 }
 
